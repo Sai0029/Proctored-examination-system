@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Registration Form</h2>
+        <form id="registrationForm" method="post" action="Register.php">
+            <div class="form-group">
+                <label for="studentId">Student ID</label>
+                <input type="text" class="form-control" id="studentId" name="student_id" required>
+                <small id="studentIdError" class="error-message"></small>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <small id="usernameError" class="error-message"></small>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+                <small id="emailError" class="error-message"></small>
+            </div>
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" class="form-control" id="age" name="age" required>
+                <small id="ageError" class="error-message"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <small id="passwordError" class="error-message"></small>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Register</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS for form validation -->
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            var studentId = document.getElementById('studentId').value.trim();
+            var username = document.getElementById('username').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var age = document.getElementById('age').value.trim();
+            var password = document.getElementById('password').value.trim();
+
+            var isValid = true;
+
+            // Clear previous error messages
+            var errorMessages = document.getElementsByClassName('error-message');
+            for (var i = 0; i < errorMessages.length; i++) {
+                errorMessages[i].textContent = '';
+            }
+
+            // Validation checks
+            if (!/^[a-zA-Z0-9]+$/.test(studentId) || studentId.length < 8) {
+                document.getElementById('studentIdError').textContent = 'Invalid Student ID. Student ID must be at least 8 characters long and contain only alphanumeric characters.';
+                isValid = false;
+            }
+
+            if (!/^[a-zA-Z]+$/.test(username) || username.length < 8) {
+                document.getElementById('usernameError').textContent = 'Invalid Username. Username must be at least 8 characters long and contain only alphabetic characters.';
+                isValid = false;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Invalid Email Format. Please enter a valid email address.';
+                isValid = false;
+            }
+
+            if (isNaN(age) || age <= 0 || age >= 80) {
+                document.getElementById('ageError').textContent = 'Invalid Age. Please enter a valid age between 1 and 79.';
+                isValid = false;
+            }
+
+            if (!/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,})(?=.[a-z])(?=.[A-Z]).{8,}/.test(password)) {
+document.getElementById('passwordError').textContent = 'Invalid Password. Password must contain at least one number, one uppercase letter, one lowercase letter, and be at least 8 characters long.';
+isValid = false;
+}
+        // Prevent form submission if validation fails
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+</script>
+
